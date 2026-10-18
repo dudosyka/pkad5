@@ -1,0 +1,53 @@
+name: delivery-analytics
+services:
+  backend:
+    image: delivery-analytics-backend
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in backend/.env}
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=12)"]
+      interval: 30s
+      timeout: 15s
+      start_period: 15s
+      retries: 3
+  frontend:
+    image: delivery-analytics-frontend
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:${UI_PORT:-8080}:80"
+    volumes:
+      - ../pipeline/er.jpg:/usr/share/nginx/html/er.jpg:ro
+    depends_on:
+      backend:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  tests:
+    profiles: [test]
+    build:
+      context: .
+      dockerfile: Dockerfile.tests
+    environment:
+      BASE_URL: http://frontend
+    volumes:
+      - ./test-artifacts:/artifacts
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    init: true
+    shm_size: 256mb

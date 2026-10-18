@@ -1,0 +1,14 @@
+.git
+.agents
+.aws
+.codex
+**/.env
+**/.env.*
+**/.venv
+**/__pycache__
+**/*.pyc
+**/*.tsbuildinfo
+**/node_modules
+**/dist
+**/test-artifacts
+pipeline/.local

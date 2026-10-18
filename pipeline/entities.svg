@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="810" viewBox="0 0 1480 810" role="img" aria-label="Food delivery business entity relationship diagram">
+  <rect width="1480" height="810" fill="#f7f9fc" />
+  <text x="50" y="40" font-family="DejaVu Sans,sans-serif" font-size="25" fill="#162536">Food delivery: business entities</text>
+  <text x="50" y="65" font-family="DejaVu Sans,sans-serif" font-size="13" fill="#162536">PK = primary key | FK = foreign key | ? = nullable | One item per order</text>
+  <path d="M400,140 H440 V476 H490" fill="none" stroke="#536477" stroke-width="1.7" />
+  <circle cx="490" cy="476" r="3" fill="#536477" />
+  <text x="445" y="350" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#405168">1 : 0..N</text>
+  <path d="M860,140 H1025 V532 H1010" fill="none" stroke="#536477" stroke-width="1.7" />
+  <circle cx="1010" cy="532" r="3" fill="#536477" />
+  <text x="865" y="320" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#405168">0..1 : 0..N</text>
+  <path d="M1050,140 H1040 V504 H1010" fill="none" stroke="#536477" stroke-width="1.7" />
+  <circle cx="1010" cy="504" r="3" fill="#536477" />
+  <text x="1050" y="350" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#405168">1 : 0..N</text>
+  <path d="M490,420 H475 V650 H460" fill="none" stroke="#536477" stroke-width="1.7" />
+  <circle cx="460" cy="650" r="3" fill="#536477" />
+  <text x="485" y="670" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#405168">1 : 1</text>
+  <path d="M1100,500 H1085 V706 H460" fill="none" stroke="#536477" stroke-width="1.7" />
+  <circle cx="460" cy="706" r="3" fill="#536477" />
+  <text x="800" y="697" font-family="DejaVu Sans,sans-serif" font-size="11" fill="#405168">1 : 0..N</text>
+  <g id="customers" transform="translate(0 0)">
+    <rect x="50" y="90" width="350" height="204" fill="white" stroke="#8b9bac" />
+    <rect x="50" y="90" width="350" height="36" fill="#dcebf6" stroke="#8b9bac" />
+    <text x="62" y="114" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="16" fill="#162536">core.customers</text>
+    <path d="M50,126 H400" stroke="#e1e7ee" />
+    <text x="58" y="145" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK</text>
+    <text x="105" y="145" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">customer_id</text>
+    <text x="392" y="145" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M50,154 H400" stroke="#e1e7ee" />
+    <text x="58" y="173" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="105" y="173" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">family_name</text>
+    <text x="392" y="173" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M50,182 H400" stroke="#e1e7ee" />
+    <text x="58" y="201" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="105" y="201" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">given_name</text>
+    <text x="392" y="201" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M50,210 H400" stroke="#e1e7ee" />
+    <text x="58" y="229" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="105" y="229" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">patronymic</text>
+    <text x="392" y="229" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+    <path d="M50,238 H400" stroke="#e1e7ee" />
+    <text x="58" y="257" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="105" y="257" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">full_name</text>
+    <text x="392" y="257" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+    <path d="M50,266 H400" stroke="#e1e7ee" />
+    <text x="58" y="285" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="105" y="285" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">phone</text>
+    <text x="392" y="285" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+  </g>
+  <g id="couriers" transform="translate(0 0)">
+    <rect x="490" y="90" width="370" height="176" fill="white" stroke="#8b9bac" />
+    <rect x="490" y="90" width="370" height="36" fill="#dcebf6" stroke="#8b9bac" />
+    <text x="502" y="114" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="16" fill="#162536">core.couriers</text>
+    <path d="M490,126 H860" stroke="#e1e7ee" />
+    <text x="498" y="145" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK</text>
+    <text x="545" y="145" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">courier_id</text>
+    <text x="852" y="145" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,154 H860" stroke="#e1e7ee" />
+    <text x="498" y="173" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="173" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">family_name</text>
+    <text x="852" y="173" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,182 H860" stroke="#e1e7ee" />
+    <text x="498" y="201" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="201" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">given_name</text>
+    <text x="852" y="201" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,210 H860" stroke="#e1e7ee" />
+    <text x="498" y="229" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="229" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">patronymic</text>
+    <text x="852" y="229" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+    <path d="M490,238 H860" stroke="#e1e7ee" />
+    <text x="498" y="257" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="257" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">full_name</text>
+    <text x="852" y="257" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+  </g>
+  <g id="restaurants" transform="translate(0 0)">
+    <rect x="1050" y="90" width="350" height="120" fill="white" stroke="#8b9bac" />
+    <rect x="1050" y="90" width="350" height="36" fill="#dcebf6" stroke="#8b9bac" />
+    <text x="1062" y="114" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="16" fill="#162536">core.restaurants</text>
+    <path d="M1050,126 H1400" stroke="#e1e7ee" />
+    <text x="1058" y="145" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK</text>
+    <text x="1105" y="145" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">restaurant_id</text>
+    <text x="1392" y="145" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M1050,154 H1400" stroke="#e1e7ee" />
+    <text x="1058" y="173" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="1105" y="173" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">restaurant_name</text>
+    <text x="1392" y="173" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M1050,182 H1400" stroke="#e1e7ee" />
+    <text x="1058" y="201" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="1105" y="201" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">city</text>
+    <text x="1392" y="201" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+  </g>
+  <g id="orders" transform="translate(0 -60)">
+    <rect x="490" y="430" width="520" height="260" fill="white" stroke="#8b9bac" />
+    <rect x="490" y="430" width="520" height="36" fill="#dcebf6" stroke="#8b9bac" />
+    <text x="502" y="454" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="16" fill="#162536">core.orders</text>
+    <path d="M490,466 H1010" stroke="#e1e7ee" />
+    <text x="498" y="485" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK</text>
+    <text x="545" y="485" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">order_id</text>
+    <text x="1002" y="485" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,494 H1010" stroke="#e1e7ee" />
+    <text x="498" y="513" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="513" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">ordered_at</text>
+    <text x="1002" y="513" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">timestamp (local)</text>
+    <path d="M490,522 H1010" stroke="#e1e7ee" />
+    <text x="498" y="541" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">FK</text>
+    <text x="545" y="541" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">customer_id</text>
+    <text x="1002" y="541" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,550 H1010" stroke="#e1e7ee" />
+    <text x="498" y="569" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">FK</text>
+    <text x="545" y="569" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">restaurant_id</text>
+    <text x="1002" y="569" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,578 H1010" stroke="#e1e7ee" />
+    <text x="498" y="597" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">FK</text>
+    <text x="545" y="597" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">courier_id</text>
+    <text x="1002" y="597" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+    <path d="M490,606 H1010" stroke="#e1e7ee" />
+    <text x="498" y="625" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="625" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">fulfillment_type</text>
+    <text x="1002" y="625" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M490,634 H1010" stroke="#e1e7ee" />
+    <text x="498" y="653" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="653" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">customer_phone_extension</text>
+    <text x="1002" y="653" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text ?</text>
+    <path d="M490,662 H1010" stroke="#e1e7ee" />
+    <text x="498" y="681" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="545" y="681" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">total_amount</text>
+    <text x="1002" y="681" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">numeric(14,2)</text>
+  </g>
+  <g id="order_items" transform="translate(-600 -300)">
+    <rect x="650" y="900" width="410" height="148" fill="white" stroke="#8b9bac" />
+    <rect x="650" y="900" width="410" height="36" fill="#dcebf6" stroke="#8b9bac" />
+    <text x="662" y="924" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="16" fill="#162536">core.order_items</text>
+    <path d="M650,936 H1060" stroke="#e1e7ee" />
+    <text x="658" y="955" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK FK</text>
+    <text x="705" y="955" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">order_id</text>
+    <text x="1052" y="955" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M650,964 H1060" stroke="#e1e7ee" />
+    <text x="658" y="983" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK</text>
+    <text x="705" y="983" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">line_no</text>
+    <text x="1052" y="983" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">integer</text>
+    <path d="M650,992 H1060" stroke="#e1e7ee" />
+    <text x="658" y="1011" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">FK</text>
+    <text x="705" y="1011" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">dish_id</text>
+    <text x="1052" y="1011" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M650,1020 H1060" stroke="#e1e7ee" />
+    <text x="658" y="1039" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="705" y="1039" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">quantity</text>
+    <text x="1052" y="1039" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">integer</text>
+  </g>
+  <g id="dishes" transform="translate(0 -80)">
+    <rect x="1100" y="530" width="320" height="92" fill="white" stroke="#8b9bac" />
+    <rect x="1100" y="530" width="320" height="36" fill="#dcebf6" stroke="#8b9bac" />
+    <text x="1112" y="554" font-family="DejaVu Sans,sans-serif" font-weight="bold" font-size="16" fill="#162536">core.dishes</text>
+    <path d="M1100,566 H1420" stroke="#e1e7ee" />
+    <text x="1108" y="585" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480">PK</text>
+    <text x="1155" y="585" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">dish_id</text>
+    <text x="1412" y="585" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+    <path d="M1100,594 H1420" stroke="#e1e7ee" />
+    <text x="1108" y="613" font-family="DejaVu Sans,sans-serif" font-size="10" fill="#466480" />
+    <text x="1155" y="613" font-family="DejaVu Sans Mono,monospace" font-size="12" fill="#203447">dish_name</text>
+    <text x="1412" y="613" text-anchor="end" font-family="DejaVu Sans Mono,monospace" font-size="10" fill="#536477">text</text>
+  </g>
+</svg>
