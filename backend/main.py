@@ -146,10 +146,19 @@ def dashboard(request: Request, start: date | None = None, end: date | None = No
         """, p).fetchall()
         orders_by_hour = hourly_orders(connection, p, [restaurant] if restaurant else None)
         dishes = connection.execute(f"""
+            WITH prices AS (
+                SELECT dish_id,min(total_amount/quantity) AS unit_price
+                FROM core.stage_orders
+                WHERE cardinality(errors)=0 AND quantity>0 AND total_amount>0
+                  AND NOT (warnings && ARRAY['dish_quantity_inferred','amount_inferred'])
+                GROUP BY dish_id
+                HAVING min(total_amount/quantity)=max(total_amount/quantity)
+            )
             SELECT d.dish_id,d.dish_name,count(*) AS orders,sum(i.quantity)::bigint AS units,
-                   sum(o.total_amount) AS revenue
+                   sum(o.total_amount) AS revenue,p.unit_price
             FROM core.orders o JOIN core.order_items i USING(order_id) JOIN core.dishes d USING(dish_id)
-            WHERE {ORDER_PERIOD} GROUP BY d.dish_id ORDER BY units DESC,d.dish_id
+            LEFT JOIN prices p ON p.dish_id=d.dish_id
+            WHERE {ORDER_PERIOD} GROUP BY d.dish_id,p.unit_price ORDER BY units DESC,d.dish_id
         """, p).fetchall()
         fulfillment = connection.execute(f"""
             SELECT CASE WHEN fulfillment_type='delivery' AND courier_id IS NULL THEN 'unassigned'

@@ -1,6 +1,7 @@
 import csv
 from collections import Counter, defaultdict
 from datetime import datetime
+from decimal import Decimal, ROUND_HALF_UP
 import io
 import json
 import os
@@ -20,6 +21,22 @@ def get(path):
 
 
 class API(unittest.TestCase):
+    def test_dish_prices(self):
+        prices = defaultdict(set)
+        with urlopen(BASE + "/api/export.csv", timeout=30) as response:
+            orders = csv.DictReader(io.StringIO(response.read().decode("utf-8-sig")), delimiter=";")
+            for order in orders:
+                prices[order["Блюдо"]].add(Decimal(order["Сумма, ₽"]) / int(order["Количество"]))
+        all_dishes = get("/api/dashboard")["dishes"]
+        self.assertEqual({dish["dish_name"] for dish in all_dishes}, set(prices))
+        for query in ("", "?restaurant=R1&start=2026-06-01&end=2026-06-23", "?start=2026-01-06&end=2026-01-06"):
+            with self.subTest(query=query):
+                dishes = get("/api/dashboard" + query)["dishes"]
+                self.assertTrue(dishes)
+                for dish in dishes:
+                    self.assertEqual(len(prices[dish["dish_name"]]), 1)
+                    self.assertEqual(Decimal(str(dish["unit_price"])), next(iter(prices[dish["dish_name"]])))
+
     def test_restaurant_order_distribution(self):
         for query in ("", "?restaurant=R1&start=2026-06-01&end=2026-06-23", "?start=2026-01-06&end=2026-01-06", "?start=2025-01-01&end=2025-01-31"):
             with self.subTest(query=query):
@@ -78,7 +95,8 @@ class API(unittest.TestCase):
                     self.assertEqual(customer["orders"], len(source))
                     self.assertEqual(customer["units"], sum(int(o["Количество"]) for o in source))
                     self.assertAlmostEqual(customer["revenue"], sum(float(o["Сумма, ₽"]) for o in source))
-                    self.assertAlmostEqual(customer["average_order"], customer["revenue"] / customer["orders"], places=2)
+                    average = (Decimal(str(customer["revenue"])) / customer["orders"]).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+                    self.assertEqual(Decimal(str(customer["average_order"])), average)
                     self.assertEqual(customer["last_order_date"], max(o["Дата и время"][:10] for o in source))
                     self.assertEqual(customer["portion_rank"], ranks.index(customer["units"]) + 1)
                     self.assertEqual(sum(d["units"] for d in customer["dishes"]), customer["units"])
