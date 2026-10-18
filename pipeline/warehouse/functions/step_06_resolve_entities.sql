@@ -45,17 +45,34 @@ BEGIN
         SELECT dish_id,min(total_amount/quantity) AS unit_price
         FROM core.stage_orders
         WHERE cardinality(errors)=0 AND quantity>0 AND total_amount>0
-          AND NOT ('dish_quantity_inferred'=ANY(warnings))
+          AND NOT (warnings && ARRAY['dish_quantity_inferred','amount_inferred'])
         GROUP BY dish_id
         HAVING min(total_amount/quantity)=max(total_amount/quantity)
+    ), inferred AS (
+        SELECT s.raw_id,
+               CASE WHEN s.quantity IS NULL
+                          AND core.norm_text(r.effective_record->>'dish_details')=core.norm_text(s.dish_name)
+                          AND s.total_amount/p.unit_price BETWEEN 1 AND 2147483647
+                          AND mod(s.total_amount,p.unit_price)=0
+                    THEN (s.total_amount/p.unit_price)::integer END AS quantity,
+               CASE WHEN s.total_amount IS NULL AND s.quantity>0
+                          AND NOT ('dish_quantity_inferred'=ANY(s.warnings))
+                          AND s.quantity*p.unit_price BETWEEN 0.01 AND 999999999999.99
+                          AND s.quantity*p.unit_price=round(s.quantity*p.unit_price,2)
+                    THEN s.quantity*p.unit_price END AS total_amount
+        FROM core.stage_orders s
+        JOIN prices p ON p.dish_id=s.dish_id
+        JOIN core.effective_raw_records r ON r.raw_id=s.raw_id
+        WHERE s.quantity IS NULL OR s.total_amount IS NULL
     )
     UPDATE core.stage_orders s SET
-        quantity=(s.total_amount/p.unit_price)::integer,
-        errors=array_remove(s.errors,'dish_quantity_missing_or_invalid'),
-        warnings=s.warnings || ARRAY['dish_quantity_inferred']
-    FROM prices p,core.effective_raw_records r
-    WHERE s.dish_id=p.dish_id AND s.raw_id=r.raw_id AND s.quantity IS NULL
-      AND core.norm_text(r.effective_record->>'dish_details')=core.norm_text(s.dish_name)
-      AND s.total_amount/p.unit_price BETWEEN 1 AND 2147483647
-      AND mod(s.total_amount,p.unit_price)=0;
+        quantity=coalesce(i.quantity,s.quantity),
+        total_amount=coalesce(i.total_amount,s.total_amount),
+        errors=CASE WHEN i.quantity IS NOT NULL
+                    THEN array_remove(s.errors,'dish_quantity_missing_or_invalid')
+                    ELSE array_remove(array_remove(s.errors,'amount_missing'),'amount_invalid_or_approximate') END,
+        warnings=s.warnings || CASE WHEN i.quantity IS NOT NULL
+                                   THEN ARRAY['dish_quantity_inferred'] ELSE ARRAY['amount_inferred'] END
+    FROM inferred i
+    WHERE s.raw_id=i.raw_id AND (i.quantity IS NOT NULL OR i.total_amount IS NOT NULL);
 END $$;
