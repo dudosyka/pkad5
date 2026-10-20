@@ -8,9 +8,9 @@ BEGIN
     raw_name:=split_part(value,'/',1);
     IF kind='customer' AND strpos(value,'/')>0 THEN raw_phone:=split_part(value,'/',2); END IF;
     IF NOT core.is_missing(raw_phone) AND core.clean_phone(raw_phone) IS NULL THEN RETURN NULL; END IF;
-    IF regexp_count(upper(raw_name),'\m[UC][0-9]{3}\M')>1 THEN RETURN NULL; END IF;
-    code:=substring(upper(raw_name) from '\m([UC][0-9]{3})\M');
-    clean_name:=regexp_replace(raw_name,'\m[UC][0-9]{3}\M','','gi');
+    IF regexp_count(upper(raw_name),'\m[UC][0-9]{3,}\M')>1 THEN RETURN NULL; END IF;
+    code:=substring(upper(raw_name) from '\m([UC][0-9]{3,})\M');
+    clean_name:=regexp_replace(raw_name,'\m[UC][0-9]{3,}\M','','gi');
     key:=core.name_key(clean_name);
     IF code IS NOT NULL THEN
         SELECT p.person_id INTO candidate FROM core.person_lookup p

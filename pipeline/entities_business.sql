@@ -3,7 +3,7 @@ BEGIN;
 CREATE SCHEMA IF NOT EXISTS core;
 
 CREATE TABLE IF NOT EXISTS core.customers (
-    customer_id text PRIMARY KEY CHECK (customer_id ~ '^U[0-9]{3}$'),
+    customer_id text PRIMARY KEY CHECK (customer_id ~ '^U[0-9]{3,}$'),
     family_name text NOT NULL,
     given_name text NOT NULL,
     patronymic text,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS core.customers (
     phone text UNIQUE CHECK (phone ~ '^\+7[0-9]{10}$')
 );
 CREATE TABLE IF NOT EXISTS core.couriers (
-    courier_id text PRIMARY KEY CHECK (courier_id ~ '^C[0-9]{3}$'),
+    courier_id text PRIMARY KEY CHECK (courier_id ~ '^C[0-9]{3,}$'),
     family_name text NOT NULL,
     given_name text NOT NULL,
     patronymic text,

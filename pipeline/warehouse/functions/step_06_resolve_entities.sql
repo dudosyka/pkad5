@@ -7,11 +7,16 @@ BEGIN
                             AND core.norm_text(s.courier_info)<>'не назначен'
                         THEN core.resolve_person('courier',s.courier_info) END;
 
+    WITH matches AS (
+        SELECT s.raw_id,min(r.restaurant_id) AS restaurant_id
+        FROM core.stage_orders s JOIN core.restaurants r
+          ON core.norm_text(s.restaurant_name)=core.norm_text(r.restaurant_name)
+         AND (s.restaurant_source_id IS NULL OR s.restaurant_source_id=r.restaurant_id)
+         AND (s.restaurant_city IS NULL OR core.norm_text(s.restaurant_city)=core.norm_text(r.city))
+        GROUP BY s.raw_id HAVING count(*)=1
+    )
     UPDATE core.stage_orders s SET restaurant_id=r.restaurant_id
-    FROM core.restaurants r
-    WHERE core.norm_text(s.restaurant_name)=core.norm_text(r.restaurant_name)
-      AND (s.restaurant_source_id IS NULL OR s.restaurant_source_id=r.restaurant_id)
-      AND (s.restaurant_city IS NULL OR core.norm_text(s.restaurant_city)=core.norm_text(r.city));
+    FROM matches r WHERE s.raw_id=r.raw_id;
     UPDATE core.stage_orders s SET dish_id=d.dish_id
     FROM core.dishes d
     WHERE core.norm_text(s.dish_name)=core.norm_text(d.dish_name)

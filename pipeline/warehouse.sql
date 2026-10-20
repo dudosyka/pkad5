@@ -10,6 +10,8 @@ BEGIN;
 \ir warehouse/functions/name_key.sql
 \ir warehouse/functions/is_missing.sql
 \ir warehouse/functions/clean_phone.sql
+\ir warehouse/functions/reference_id.sql
+\ir warehouse/functions/parse_person.sql
 \ir warehouse/functions/clean_order_id.sql
 \ir warehouse/functions/clean_datetime.sql
 \ir warehouse/functions/clean_amount.sql

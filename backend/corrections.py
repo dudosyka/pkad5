@@ -34,13 +34,13 @@ class Correction(BaseModel):
     expected_correction_id: int | None = Field(default=None, gt=0)
     order_id: str = Field(min_length=1, max_length=80)
     ordered_at: datetime
-    customer_id: str = Field(pattern=r"^U[0-9]{3}$")
+    customer_id: str = Field(pattern=r"^U[0-9]{3,}$")
     restaurant_id: str = Field(pattern=r"^R[0-9]+$", max_length=30)
     dish_id: str = Field(pattern=r"^D[0-9]+$", max_length=30)
     quantity: int = Field(ge=1, le=999999999)
     total_amount: Decimal = Field(gt=0, max_digits=14, decimal_places=2)
     fulfillment_type: Literal["pickup", "delivery", "unknown"]
-    courier_id: str | None = Field(default=None, pattern=r"^C[0-9]{3}$")
+    courier_id: str | None = Field(default=None, pattern=r"^C[0-9]{3,}$")
     phone_extension: str | None = Field(default=None, pattern=r"^[0-9]{1,12}$")
     comment: str = Field(default="", max_length=500)
 

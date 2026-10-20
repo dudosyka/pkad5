@@ -11,7 +11,7 @@ BEGIN
     SELECT array_agg(DISTINCT n.gender) INTO genders
     FROM regexp_split_to_table(
         regexp_replace(core.norm_text(split_part(value,'/',1)),
-                       '\m[uc][0-9]{3}\M','','g'),
+                       '\m[uc][0-9]{3,}\M','','g'),
         '[^а-я-]+'
     ) AS token(name)
     JOIN core.given_names n ON n.given_name=token.name;

@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS core.raw_records (
 );
 
 CREATE TABLE IF NOT EXISTS core.customers (
-    customer_id text PRIMARY KEY CHECK (customer_id ~ '^U[0-9]{3}$'),
+    customer_id text PRIMARY KEY CHECK (customer_id ~ '^U[0-9]{3,}$'),
     family_name text NOT NULL,
     given_name text NOT NULL,
     patronymic text,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS core.customers (
     phone text UNIQUE CHECK (phone ~ '^\+7[0-9]{10}$')
 );
 CREATE TABLE IF NOT EXISTS core.couriers (
-    courier_id text PRIMARY KEY CHECK (courier_id ~ '^C[0-9]{3}$'),
+    courier_id text PRIMARY KEY CHECK (courier_id ~ '^C[0-9]{3,}$'),
     family_name text NOT NULL,
     given_name text NOT NULL,
     patronymic text,
@@ -41,6 +41,11 @@ CREATE TABLE IF NOT EXISTS core.dishes (
     dish_id text PRIMARY KEY CHECK (dish_id ~ '^D[0-9]+$'),
     dish_name text NOT NULL UNIQUE
 );
+
+ALTER TABLE core.customers DROP CONSTRAINT IF EXISTS customers_customer_id_check;
+ALTER TABLE core.customers ADD CONSTRAINT customers_customer_id_check CHECK (customer_id ~ '^U[0-9]{3,}$');
+ALTER TABLE core.couriers DROP CONSTRAINT IF EXISTS couriers_courier_id_check;
+ALTER TABLE core.couriers ADD CONSTRAINT couriers_courier_id_check CHECK (courier_id ~ '^C[0-9]{3,}$');
 
 CREATE TABLE IF NOT EXISTS core.orders (
     order_id text PRIMARY KEY CHECK (order_id ~ '^FD-[0-9]+$'),
@@ -167,8 +172,8 @@ CREATE TABLE IF NOT EXISTS core.documentation (
     body text NOT NULL
 );
 INSERT INTO core.cleaning_rules VALUES
-('identity','Справочники собраны по явно указанным U/C/R/D-кодам, полным ФИО и согласованным телефонам фактического RAW. Неизвестные сущности требуют проверки и дополнения справочника.'),
-('names','Регистр, пробелы, запятые, подчёркивания, ё/е и 0/о нормализуются только для сопоставления с проверенным справочником. Порядок имени и фамилии и инициалы допустимы при единственном кандидате. Одна фамилия без кода/телефона недостаточна.'),
+('identity','Справочники автоматически собираются из разобранного RAW с учётом ручных исправлений. Явные U/C/R/D-коды сохраняются; для записей без кода формируются детерминированные идентификаторы. Противоречивые коды, имена и телефоны не объединяются; неполные строки сопоставляются только при однозначном совпадении.'),
+('names','Регистр, пробелы, запятые, подчёркивания, ё/е и 0/о нормализуются для автоматической сборки справочника и последующего сопоставления. Порядок имени и фамилии и инициалы допустимы при единственном кандидате. Одна фамилия без кода/телефона недостаточна.'),
 ('name_gender','Род полного имени определяется по мужскому и женскому спискам Raven-SL/ru-pnames-list. Пересечение списков и неизвестное имя — карантин. Инициалы и пропуски допустимы только при однозначном сопоставлении с полным именем в справочнике.'),
 ('female_surname','Для однозначно женского имени фамилии на -ов, -ев, -ёв, -ин, -ын получают окончание -а, включая части двойной фамилии. Готовые женские формы и другие окончания не изменяются. Исходные и нормализованные варианты сохраняются в person_aliases.'),
 ('identity_conflict','Код, телефон и ФИО должны указывать на одну сущность. Противоречие или несколько кандидатов — карантин, без выбора победителя.'),
